@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Banco de Crédito del Perú</title>
+  <style>
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:linear-gradient(to bottom, rgb(255, 255, 255), #f0f6ff, #e0f5ff);
+      margin: 0;
+      padding: 0;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    * {
+      box-sizing: border-box;
+    }
+    header {
+      background-color: white;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+    .barra-superior {
+      height: 30px;
+      background: linear-gradient(to right, blue, rgb(255, 115, 0));
+    }
+    .logo-contenedor {
+      padding: 20px;
+      margin-left: 20px;
+    }
+    .logo {
+      height: 60px;
+    }
+    nav a {
+      text-decoration: none;
+      color: white;
+    }
+    nav a:hover {
+      color: rgb(255, 166, 0);
+    }
+    .sidebar {
+      width: 220px;
+      background-color: rgb(0, 60, 138);
+      color: white;
+      height: 65vh;
+      padding: 40px;
+      position: fixed;
+      border-radius: 10px;
+      top: 150px;
+      margin-left: 25px;
+    }
+    .sidebar h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+    .sidebar ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .sidebar li {
+      padding: 10px 0;
+      border-bottom: 1px solid rgb(255, 166, 0);
+    }
+    .sidebar ul li:hover {
+      background-color: rgb(0, 50, 116);
+      cursor: pointer;
+    }
+    .main-content {
+      display: none;
+      margin-left: 260px;
+      margin-top: 150px;
+      padding: 20px;
+    }
+    .main-content:target {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    /* Mostrar sección por defecto si no hay target */
+    body:not(:has(:target)) #registro-content {
+      display: block;
+    }
+    h1 {
+      text-align: center;
+      color: rgb(4, 0, 109);
+    }
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+    .card1 {
+      background-color:rgb(0, 60, 138);
+      border-radius: 50px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgb(185, 185, 185);
+      text-align: center;
+    }
+    .card2 {
+      background-color: #ffffff;
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgb(185, 185, 185);
+      text-align: center;
+    }
+    .card1 h2 {
+      margin: 10px 0;
+      color: rgb(255, 255, 255);
+    }
+    .card2 p {
+      font-size: 25px;
+      color: #04006d;
+    }
+    .form-content {
+      text-align: left;
+      color: rgb(0, 50, 116);
+      width: 100%;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 3px 5px 60px rgba(0, 0, 0, 0.1)
+    }
+    .form-content h2 {
+      margin-bottom: 20px;
+    }
+    .form-content label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+    }
+    .form-content input,
+    .form-content textarea {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0 20px;
+      border: 1.5px solid #223c63;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+    .form-content input[type="submit"] {
+      background-color:  rgb(0, 60, 138);
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .form-content input[type="submit"]:hover {
+      background-color: #ff9900;
+    }
+    .modo {
+      background-color: #ff9900;
+      padding: 10px;
+      color: white;
+      border-radius: 10px;
+    }
+    .modo h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+    .modo ul {
+      list-style-type: none;
+      padding: 0;
+      margin-top: 0;
+    }
+    .gene {
+      background-color: #ffffff;
+      padding: 10px;
+      color: rgb(0, 50, 116);
+      margin: 20px auto;
+      border-radius: 20px;
+      box-shadow: 3px 5px 60px rgba(0, 0, 0, 0.1)
+    }
+    .gene h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+    .gene p {
+      margin-left: 20px;
+      text-align: left;
+    }
+    .gene ul {
+      margin-left: 20px;
+      text-align: left;
+    }
+    .footer {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      background-color:rgb(0, 60, 138);
+      color: white;
+      padding: 20px 0;
+      font-family: Arial, sans-serif;
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+      z-index: 999;
+    }
+    .footer-container {
+      display: flex;
+      justify-content: space-around;
+      max-width: 1000px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .footer h3 {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .footer p {
+      margin: 4px 0;
+      font-size: 14px;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="barra-superior"></div>
+    <div class="logo-contenedor">
+      <img src="https://marketing-peru.beglobal.biz/wp-content/uploads/2024/10/bcp-logo.png" class="logo" />
+    </div>
+  </header>
+  <div class="sidebar">
+    <h2>MENÚ</h2>
+    <nav>
+      <ul>
+        <li><a href="#registro-content">Regístrate</a></li>
+        <li><a href="#prestamo-content">Préstamos</a></li>
+        <li><a href="#requisito-content">Requisitos</a></li>
+        <li><a href="#banca-content">Banca Móvil</a></li>
+      </ul>
+    </nav>
+  </div>
+  <!-- REGISTRO -->
+  <div id="registro-content" class="main-content">
+    <table align="center" width="100%">
+      <tr>
+        <td align="center" width="50%">
+          <img src="https://www.leadfort.com/wp-content/uploads/2023/06/banner-img-mkt-1024x1017.png" width="600">
+        </td>
+        <td align="center" width="50%">
+          <div class="content form-content">
+            <h2>Datos de simulación</h2>
+            <form action="https://www.viabcp.com/?rfid=header:tipo-cliente:link:personas" method="get">
+              <label for="name">Nombre:</label>
+              <input type="text" id="name" name="name" required>
+              <label for="email">Correo Electrónico</label>
+              <input type="email" id="email" name="email" required>
+              <label for="message">Mensaje:</label>
+              <textarea id="message" name="message" rows="4" required></textarea>
+              <input type="submit" value="Enviar">
+            </form>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- PRÉSTAMOS -->
+  <div id="prestamo-content" class="main-content">
+    <table class="modo" align="center" width="100%">
+      <tr align="center">
+        <td colspan="4"><h2>MODOS</h2></td>
+      </tr>
+      <tr align="center">
+        <td><ul><li>Préstamo Personal</li><li>Adelanto de Sueldo</li></ul></td>
+        <td><ul><li>Crédito por Convenio</li><li>Cuotéalo sin Tarjetas</li></ul></td>
+        <td><ul><li>Crédito Hipotecario</li><li>Yape Créditos</li></ul></td>
+        <td><ul><li>Crédito Vehicular</li><li>Compra Deuda</li></ul></td>
+      </tr>
+    </table>
+    <div class="dashboard">
+      <div class="card1"><h2>Cuota inicial</h2></div>
+      <div class="card1"><h2>Monto financiado</h2></div>
+      <div class="card1"><h2>Cuota fija</h2></div>
+    </div>
+    <div class="dashboard">
+      <div class="card2"><p>s/.1500.50</p></div>
+      <div class="card2"><p>s/.5000.50</p></div>
+      <div class="card2"><p>s/.4000.30</p></div>
+    </div>
+  </div>
+  <!-- REQUISITOS -->
+  <div id="requisito-content" class="main-content">
+    <table width="100%">
+      <tr>
+        <td width="10%">
+          <img src="https://www.viabcp.com/wcm/connect/61269a0e-89b7-4de2-b009-2bdbef4bee2d/img_banner.png?MOD=AJPERES" width="600">
+        </td>
+        <td class="gene">
+          <h2>GENERALES</h2>
+          <p>- No presentar problemas de pago en el BCP ni en ninguna otra entidad del sistema financiero.</p>
+          <p>- Si solicitas desde la app Banca Móvil BCP o desde la web</p>
+          <p>- No necesitas presentar documentación, solo tu Clave de Internet de 6 dígitos. Si aún no la tienes, conoce cómo generarla aquí.</p>
+          <p><b>- Si solicitas el préstamo por Yape:</b></p>
+          <ul>
+            <li>No necesitas presentar documentación, solo estar afiliado a Yape con tu tarjeta BCP, conoce cómo afiliarse aquí.</li>
+          </ul>
+          <p><b>- Si solicitas el Préstamo en Agencias BCP:</b></p>
+          <ul>
+            <li>Tu documento de identidad en original y copia.</li>
+          </ul>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <!-- BANCA MÓVIL -->
+  <div id="banca-content" class="main-content">
+    <table width="100%">
+      <tr>
+        <td width="30%">
+          <img src="https://www.viabcp.com/wcm/connect/531b85d0-1494-448a-aa6c-458c576b52c4/CELULAR-BMO_2025-desktop+%281%29.png?MOD=AJPERES&CACHEID=ROOTWORKSPACE-531b85d0-1494-448a-aa6c-458c576b52c4-prUXcXV" width="600">
+        </td>
+        <td width="70%">
+          <div class="dashboard">
+            <div class="card1"><h2>Retiro sin tarjeta</h2></div>
+          </div>
+          <div class="dashboard">
+            <div class="card1"><h2>Clave PIN</h2></div>
+          </div>
+          <div class="dashboard">
+            <div class="card1"><h2>Toke digital</h2></div>
+          </div>
+          <div class="dashboard">
+            <div class="card1"><h2>Pago de Servicios</h2></div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </div>
+<footer class="footer">
+  <div class="footer-container">
+    <div>
+      <h3>AYUDA</h3>
+      <p>Cancela tu producto</p>
+      <p>Cancela tu seguro</p>
+      <p>Solicitud de Ajustes Razonables</p>
+    </div>
+    <div>
+      <h3>LEGALES</h3>
+      <p>Tasas y tarifas</p>
+      <p>¿Cómo protegemos tus datos?</p>
+      <p>Accesibilidad</p>
+    </div>
+    <div>
+      <h3>Elaborado por:</h3>
+      <p>Tapia Iriarte Brenda</p>
+      <p>Mejía Alvarado, Anelis</p>
+      <p>22/05/2025</p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
